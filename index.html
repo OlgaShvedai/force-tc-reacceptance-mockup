@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Force T&C Re-acceptance – Figma Mockup</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap');
+
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    :root {
+      --surface-primary: #ffffff;
+      --surface-interactive-disabled: #cccccc;
+      --content-primary-dark: #191919;
+      --content-primary-light: #ffffff;
+      --content-disabled: #8c8c8c;
+      --border-secondary: #666666;
+      --roundness-extra-round: 16px;
+      --roundness-subtle: 4px;
+      --spacing-2x: 8px;
+      --spacing-3x: 16px;
+      --spacing-4x: 24px;
+      --spacing-6x: 40px;
+    }
+
+    html, body {
+      height: 100%;
+    }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      min-height: 100vh;
+      overflow: hidden;
+      position: relative;
+      background: #1a1a1a;
+    }
+
+    /* Background page screenshot */
+    .page-bg {
+      position: fixed;
+      inset: 0;
+      background-image: url('https://www.figma.com/api/mcp/asset/7335e948-8480-4256-b2b3-ed5dbf3d6af0');
+      background-size: cover;
+      background-position: center top;
+    }
+
+    /* Dark overlay */
+    .overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.6);
+    }
+
+    /* Modal centering */
+    .modal-wrapper {
+      position: fixed;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+    }
+
+    /* Modal container */
+    .modal {
+      width: 700px;
+      border-radius: var(--roundness-extra-round);
+      overflow: hidden;
+      box-shadow: 0 24px 48px rgba(0, 0, 0, 0.4);
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* Modal Header */
+    .modal-header {
+      background: var(--surface-primary);
+      padding: 24px 24px 24px var(--spacing-6x);
+      border-radius: var(--roundness-extra-round) var(--roundness-extra-round) 0 0;
+    }
+
+    .modal-header-title {
+      font-family: 'Inter', sans-serif;
+      font-size: 24px;
+      font-weight: 700;
+      line-height: 1;
+      color: var(--content-primary-dark);
+      margin-bottom: var(--spacing-2x);
+      padding-top: var(--spacing-3x);
+    }
+
+    .modal-header-subtitle {
+      font-family: 'Inter', sans-serif;
+      font-size: 16px;
+      font-weight: 400;
+      line-height: 1.5;
+      color: var(--content-primary-dark);
+    }
+
+    /* Modal Content */
+    .modal-content {
+      background: var(--content-primary-dark);
+      padding: var(--spacing-4x) var(--spacing-6x);
+      display: flex;
+      flex-direction: column;
+      gap: var(--spacing-3x);
+    }
+
+    /* Checkbox row */
+    .checkbox-row {
+      display: flex;
+      gap: var(--spacing-2x);
+      align-items: flex-start;
+      min-height: 48px;
+      padding: var(--spacing-2x) 0;
+    }
+
+    /* Custom checkbox */
+    .checkbox {
+      width: 24px;
+      height: 24px;
+      border: 1.5px solid var(--border-secondary);
+      border-radius: var(--roundness-subtle);
+      flex-shrink: 0;
+      cursor: pointer;
+      background: transparent;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: border-color 0.15s, background 0.15s;
+      margin-top: 2px;
+    }
+
+    .checkbox:hover {
+      border-color: #999;
+    }
+
+    .checkbox.checked {
+      background: #33cc33;
+      border-color: #33cc33;
+    }
+
+    .checkbox.checked::after {
+      content: '';
+      display: block;
+      width: 14px;
+      height: 10px;
+      border-left: 2px solid #fff;
+      border-bottom: 2px solid #fff;
+      transform: rotate(-45deg) translateY(-2px);
+    }
+
+    /* Checkbox label */
+    .checkbox-label {
+      font-family: 'Inter', sans-serif;
+      font-size: 16px;
+      font-weight: 400;
+      line-height: 1.5;
+      color: var(--content-primary-light);
+      width: 488px;
+    }
+
+    .checkbox-label a,
+    .checkbox-label .link {
+      text-decoration: underline;
+      color: var(--content-primary-light);
+      cursor: pointer;
+    }
+
+    .checkbox-label .optional {
+      font-size: 14px;
+      font-weight: 500;
+      color: #cccccc;
+      letter-spacing: 0.28px;
+    }
+
+    /* Modal Footer */
+    .modal-footer {
+      background: var(--surface-primary);
+      padding: var(--spacing-4x) var(--spacing-6x) var(--spacing-6x);
+      border-radius: 0 0 var(--roundness-extra-round) var(--roundness-extra-round);
+    }
+
+    .btn-agree {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      height: 48px;
+      padding: var(--spacing-2x) var(--spacing-4x);
+      border-radius: var(--roundness-subtle);
+      font-family: 'Inter', sans-serif;
+      font-size: 16px;
+      font-weight: 600;
+      line-height: 1.5;
+      cursor: pointer;
+      border: none;
+      transition: background 0.2s, color 0.2s;
+      background: var(--surface-interactive-disabled);
+      color: var(--content-disabled);
+    }
+
+    .btn-agree.active {
+      background: #33cc33;
+      color: #ffffff;
+      cursor: pointer;
+    }
+
+    .btn-agree.active:hover {
+      background: #29a329;
+    }
+  </style>
+</head>
+<body>
+  <!-- Background page -->
+  <div class="page-bg"></div>
+  <!-- Dark overlay -->
+  <div class="overlay"></div>
+
+  <!-- Modal -->
+  <div class="modal-wrapper">
+    <div class="modal" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+
+      <!-- Header -->
+      <div class="modal-header">
+        <h1 class="modal-header-title" id="modal-title">Terms &amp; policies</h1>
+        <p class="modal-header-subtitle">To continue, please review and accept Envato's Terms &amp; policies.</p>
+      </div>
+
+      <!-- Content -->
+      <div class="modal-content">
+
+        <!-- Checkbox 1 - Required -->
+        <div class="checkbox-row">
+          <div class="checkbox" id="cb1" role="checkbox" aria-checked="false" tabindex="0" onclick="toggleCheckbox('cb1', 'agree-btn')"></div>
+          <div class="checkbox-label">
+            I agree to Envato's <span class="link">Terms &amp; policies</span> that apply to my use of Envato products.
+          </div>
+        </div>
+
+        <!-- Checkbox 2 - Optional -->
+        <div class="checkbox-row">
+          <div class="checkbox" id="cb2" role="checkbox" aria-checked="false" tabindex="0" onclick="toggleCheckbox('cb2', null)"></div>
+          <div class="checkbox-label">
+            Send me creative inspiration, tutorials, product updates and offers from Envato. <span class="optional">(Optional)</span>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Footer -->
+      <div class="modal-footer">
+        <button class="btn-agree" id="agree-btn" disabled>Agree &amp; continue</button>
+      </div>
+
+    </div>
+  </div>
+
+  <script>
+    function toggleCheckbox(id, btnId) {
+      const cb = document.getElementById(id);
+      const isChecked = cb.getAttribute('aria-checked') === 'true';
+      cb.setAttribute('aria-checked', !isChecked);
+      cb.classList.toggle('checked', !isChecked);
+
+      if (btnId) {
+        const btn = document.getElementById(btnId);
+        const required = document.getElementById('cb1');
+        const requiredChecked = required.getAttribute('aria-checked') === 'true';
+        btn.disabled = !requiredChecked;
+        btn.classList.toggle('active', requiredChecked);
+      }
+    }
+
+    // Keyboard support
+    document.querySelectorAll('.checkbox').forEach(cb => {
+      cb.addEventListener('keydown', e => {
+        if (e.key === ' ' || e.key === 'Enter') {
+          e.preventDefault();
+          cb.click();
+        }
+      });
+    });
+  </script>
+</body>
+</html>
