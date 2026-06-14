@@ -203,13 +203,13 @@
     }
 
     .btn-agree.active {
-      background: #33cc33;
-      color: #ffffff;
+      background: #9CEE69 !important;
+      color: #191919 !important;
       cursor: pointer;
     }
 
     .btn-agree.active:hover {
-      background: #29a329;
+      background: #8de055 !important;
     }
   </style>
 </head>
@@ -245,7 +245,7 @@
 
       <!-- Footer -->
       <div class="modal-footer">
-        <button class="btn-agree" id="agree-btn" disabled>Agree &amp; continue</button>
+        <button class="btn-agree" id="agree-btn" disabled onclick="dismissModal()">Agree &amp; continue</button>
       </div>
 
     </div>
@@ -262,9 +262,23 @@
         const btn = document.getElementById(btnId);
         const required = document.getElementById('cb1');
         const requiredChecked = required.getAttribute('aria-checked') === 'true';
-        btn.disabled = !requiredChecked;
-        btn.classList.toggle('active', requiredChecked);
+        if (requiredChecked) {
+          btn.removeAttribute('disabled');
+          btn.style.background = '#9CEE69';
+          btn.style.color = '#191919';
+          btn.style.cursor = 'pointer';
+        } else {
+          btn.setAttribute('disabled', '');
+          btn.style.background = '';
+          btn.style.color = '';
+          btn.style.cursor = '';
+        }
       }
+    }
+
+    function dismissModal() {
+      document.querySelector('.modal-wrapper').style.display = 'none';
+      document.querySelector('.overlay').style.display = 'none';
     }
 
     // Keyboard support
